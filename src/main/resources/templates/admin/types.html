@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head th:replace="admin/_adminfragments :: adminHead(~{::title})">
+    <meta charset="utf-8" />
+    <title>分类管理</title>
+</head>
+<body>
+<!-- 导航 -->
+<nav th:replace="admin/_adminfragments :: adminMenu(2)" class="ui inverted attached top segment  m-padded-tb-mini">
+
+</nav>
+
+
+
+<!-- 中间部分 -->
+<div class="m-big m-top">
+    <div class="ui container">
+
+
+
+
+        <form action="#" th:action="@{/admin/types/input}"  class="ui segment form">
+
+
+
+
+            <div class="inline field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">分类</label>
+                    <label>
+                        <input type="text" name="name" placeholder="分类名称" required/>
+                    </label>
+                </div>
+                <button type="submit" class="ui submit teal button"><i class="plus icon"></i>新增</button>
+            </div>
+        </form>
+        <!--操作消息提示-->
+        <div class="ui green message" th:unless="${#strings.isEmpty(success)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${success}"></p>
+        </div>
+        <div class="ui error message" th:unless="${#strings.isEmpty(failed)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${failed}"></p>
+        </div>
+        <div class="ui error message" th:unless="${#strings.isEmpty(exit)}">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p th:text="${exit}"></p>
+        </div>
+        <table class="ui center aligned attached celled table">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>分类名称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="type,iterStat  : ${page.content}">
+                <td th:text="${iterStat.count}">1</td>
+                <td th:text="${type.name}">spring</td>
+                <td>
+                    <a href="#"  th:href="@{/admin/types/{id}/delete(id=${type.id})}" class="ui mini red basic button">删除</a>
+                </td>
+            </tr>
+
+            </tbody>
+            <tfoot>
+            <tr>
+                <!--如果当前页大于一就显示分页，反之不显示-->
+                <th colspan="6" th:if="${page.totalPages}>1">
+                    <div class="ui mini pagination menu">
+                        <a th:href="@{/admin/types(page=${page.number} - 1)}" href="#" th:unless="${page.first}" class="item">上一页</a>
+                        <a th:href="@{/admin/types(page=${page.number} + 1)}" href="#" th:unless="${page.last}" class="item">下一页</a>
+                    </div>
+                </th>
+            </tr>
+            </tfoot>
+        </table>
+
+    </div>
+</div>
+
+<br>
+<br>
+
+
+
+
+
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<th:block th:replace="admin/_adminfragments :: adminScript"></th:block>
+
+
+</body>
+<script>
+    $(function(){
+        $(".menu.toggle").click(function(){
+
+            $(".m-item").toggleClass("m-mobile-hiden");
+        });
+
+        $('.ui.dropdown').dropdown({
+            on:'hover',
+            position: 'bottom center'
+        });
+
+        $("#pay").popup({
+            popup: $(".m-pay"),
+            on:'click',
+            position:'bottom center'
+        });
+
+        $(".message .close").on("click",function () {
+            $(this).closest(".message").transition('fade');
+        });
+
+
+
+    })
+</script>
+</html>

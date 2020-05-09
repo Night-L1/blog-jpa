@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+	<head th:replace="_fragments :: head(~{:: title})">
+		<meta charset="utf-8" />
+		<title>博客详情页</title>
+	</head>
+	<body>
+		<!-- 导航 -->
+		<nav th:replace="_fragments :: menu(0)" class="ui inverted attach segment  m-padded-tb-mini"></nav>
+
+		<!-- 中间部分 -->
+		<div id="waypoint" class="m-mid m-top animated fadeIn" th:object="${blog}">
+			<div class="ui container">
+				<!-- 头部 -->
+				<div class="ui top attached segment">
+					<div class="ui horizontal link list">
+						<div class="item">
+							<img src="https://unsplash.it/100/100?image=1005" th:src="*{user.avatar}" width="100" alt="" class="ui avatar image">
+							<div class="content">
+								<a class="header">
+									<span th:text="*{user.nickname}"></span>
+								</a>
+							</div>
+						</div>
+						<div class="item">
+							<span><i class="calendar icon"></i></span><span th:text="*{updateTime}"></span>
+						</div>
+						<div class="item">
+							<span><i class="eye icon"></i></span><span th:text="*{views}"></span>
+						</div>
+					</div>
+				</div>
+				<!-- 图片 -->
+				<div class="ui attached aligned center segment">
+					<div  align="center">
+						<img  src="https://unsplash.it/800/450?image=1005" th:src="*{fitsrPicture}" width="450" height="300" alt="" class="ui rounded  image">
+					</div>
+				</div>
+				<!-- 内容 -->
+				<div class="ui attached segment">
+					<div class="ui segment basic right aligned">
+						<div class="ui label basic orange" th:text="*{flag}">原创</div>
+					</div>
+					<h2 class="ui header center aligned" th:text="*{title}">标题</h2>
+					<div id="content" class="js-toc-content m-padded-lr  typo typo-selection" th:utext="*{content}">
+
+					</div>
+					<!-- 标签 -->
+					<div class="m-padded-lr-top">
+						<div class="ui basic teal left label point" th:each="tag:*{tags}" th:text="${tag.name}">spring</div>
+					</div>
+					<!-- 赞赏 -->
+					<div class="ui segment center aligned basic" th:if="*{appreciation}">
+						<button id="pay"
+								class="ui orange circular basic button center aligned"
+								>赞赏</button>
+					</div>
+					
+					<!-- 二维码 -->
+					<div class="ui m-pay flowing popup transition hidden">
+						
+						<div class="ui orange basic label">
+							<div class="ui images" style="font: inherit!important;" th:object="${about}">
+								<div class="image">
+									<img src="../static/img/1.jpg" th:src="*{aliPay}" alt="" class="ui rounded bordered  image" style="width: 120px;">
+									<div>支付宝</div>
+								</div>
+								<div class="image">
+									<img src="../static/img/1.jpg" th:src="*{wxPay}" alt="" class="ui rounded bordered image" style="width: 120px;">
+									<div>微信</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					
+					
+				</div>
+				<!-- 博客信息 -->
+				<div class="ui  attached positive message">
+					<div class="ui middle aligned grid">
+						 <div class="eleven wide column">
+							 <div class="list" style="margin-left: 4em!important;">
+								 <ul class="list">
+									 <li th:text="'作者: ' + *{user.nickname}">作者：曹付磊（联系作者）</li>
+									 <li th:text="'更新时间: ' + *{#dates.format(updateTime,'yyyy-MM-dd')}">发表时间：2020-04-20 12:20:21</li>
+									 <li>版权声明：自由转载-非商用</li>
+								 </ul>
+								 
+							 </div>
+						 </div>
+						 <div class="five wide column">
+							<img src="../static/img/1.jpg" th:src="@{/img/1.jpg}" alt="" class="ui right floated rounded  image" style="width: 120px!important;">
+						 </div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<br>
+		<br>
+		
+		<!-- 导航菜单 -->
+		<div id="toolbar" class="ui vertical icon buttons m-position" style="display: none;">
+			<button type="button" class="ui toc icon teal button">目录</button>
+			<a href="javascript:void(0);" class="ui  m-wx button"><i class="weixin icon"></i></a>
+			<a href="javascript:void(0);" id="toTop" class="ui icon button"><i class="chevron circle up icon"></i></a>
+		</div>
+
+		
+		<!-- 二维码 -->
+		<div class="ui m-friden flowing popup transition hidden" style="width: 130px!important;">
+			<div class="ui  basic label">
+				<div class="ui images" style="font: inherit!important;">
+					<div id="qrcode">
+						
+					</div>
+						
+				</div>
+			</div>
+		</div>
+		
+		<!-- 生成目录 -->
+		<div class="ui m-toc flowing popup transition hidden" style="width: 250px!important;">
+			<ol class="js-toc"></ol>
+		</div>
+		
+		
+		<!-- 底部 -->
+		<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-max center aligned">
+		</footer>
+
+		<th:block th:replace="_fragments :: script"></th:block>
+	</body>
+	<script>
+		$(function() {
+			/* 生成目录初始化 */
+			tocbot.init({
+				// Where to render the table of contents.
+				tocSelector: '.js-toc',
+				// Where to grab the headings to build the table of contents.
+				contentSelector: '.js-toc-content',
+				// Which headings to grab inside of the contentSelector element.
+				headingSelector: 'h1, h2, h3',
+				// For headings inside relative or absolute positioned containers within content.
+				hasInnerContainers: true,
+			});
+
+
+			$(".menu.toggle").click(function () {
+
+				$(".m-item").toggleClass("m-mobile-hiden");
+			});
+
+			$("#pay").popup({
+				popup: $(".m-pay"),
+				on: 'click',
+				position: 'bottom center'
+			})
+			$(".m-wx").popup({
+				popup: $(".m-friden"),
+				on: 'click',
+				position: 'left center'
+			});
+			/* toc icon teal button */
+			$(".toc").popup({
+				popup: $(".m-toc"),
+				on: 'click',
+				position: 'left center'
+			});
+
+			/* 生成二维码 */
+
+			new QRCode("qrcode", {
+				text: window.location.href,
+				width: 100,
+				height: 100,
+				colorDark: "#000000",
+				colorLight: "#ffffff",
+				correctLevel: QRCode.CorrectLevel.H
+			});
+
+			/* 滚动检测 */
+			var waypoint = new Waypoint({
+				element: $("#waypoint"),
+				handler: function (direction) {
+					if (direction == 'down') {
+						$("#toolbar").show(800)
+					} else {
+						$("#toolbar").hide(500)
+					}
+				}
+			});
+
+
+			$("#toTop").click(function () {
+				$(window).scrollTo(0, 1000);
+
+			})
+			$("#toCompent").click(function () {
+				$.scrollTo("#compent", 1000);
+			});
+		})
+	</script>
+</html>

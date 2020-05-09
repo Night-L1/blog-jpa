@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head th:replace="admin/_adminfragments :: adminHead(~{::title})">
+    <meta charset="utf-8" />
+    <title>设置管理</title>
+</head>
+<body>
+<!-- 导航 -->
+<nav th:replace="admin/_adminfragments :: adminMenu(4)" class="ui inverted attached top segment  m-padded-tb-mini">
+
+</nav>
+
+
+
+<!-- 中间部分 -->
+<div class="m-big m-top">
+    <form action="" th:action="@{/admin/updateSettings}" th:method="post"  enctype="multipart/form-data">
+        <div class="ui container ">
+            <div class="ui segment">
+
+                <!--操作消息提示-->
+                <div class="ui  message" th:unless="${#strings.isEmpty(message)}">
+                    <i class="close icon"></i>
+                    <div class="header">提示：</div>
+                    <p th:text="${message}"></p>
+                </div>
+
+                <div class="ui styled fluid accordion" th:object="${about}">
+                    <div class="title"><i class="dropdown icon"></i>设置头像</div>
+                    <div class="content">
+                        <div class="ui form">
+                            <div class="field">
+                                <input type="file" accept="image/png" name="files">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="title"><i class="dropdown icon"></i>设置邮箱</div>
+                    <div class="content">
+                        <div class="ui form">
+                            <div class="field">
+                                <input type="text" name="email" th:value="*{email}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title"><i class="dropdown icon"></i>博客底部介绍</div>
+                    <div class="content">
+                        <div class="ui form">
+                            <div class="field">
+                                <input type="text" name="footerBlog" th:value="*{footerBlog}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title"><i class="dropdown icon"></i>兴趣爱好["-" 分割]</div>
+                    <div class="content">
+                        <div class="ui form">
+                            <div class="field">
+                                <input type="text" name="hobbys" th:value="*{hobbys}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="title"><i class="dropdown icon"></i>自我介绍</div>
+                    <div class="content">
+                        <div class="ui form">
+                            <div class="field">
+                                <input type="text" name="introduce" th:value="*{introduce}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="title"><i class="dropdown icon"></i>QQ</div>
+                    <div class="content">
+                        <div class="ui form">
+                            <div class="field">
+                                <input type="text" name="qq" th:value="*{qq}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title"><i class="dropdown icon"></i>WX</div>
+                    <div class="content">
+                        <div class="ui form">
+                            <div class="field">
+                                <input type="file" name="files">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title"><i class="dropdown icon"></i>技术标签["-" 分割]</div>
+                    <div class="content">
+                        <div class="ui form">
+                            <div class="field">
+                                <input type="text" name="technologys" th:value="*{technologys}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title"><i class="dropdown icon"></i>支付宝支付</div>
+                    <div class="content">
+                        <div class="ui form">
+                            <div class="field">
+                                <input type="file" name="files">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="title"><i class="dropdown icon"></i>微信支付</div>
+                    <div class="content">
+                        <div class="ui form">
+                            <div class="field">
+                                <input type="file" name="files">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="ui segment  attached top center aligned">
+                    <button class="ui blue basic button">提交</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<br>
+<br>
+
+
+
+
+
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<th:block th:replace="admin/_adminfragments :: adminScript"></th:block>
+
+
+</body>
+<script>
+    $(function(){
+
+        $('.ui.accordion')
+            .accordion()
+        ;
+
+
+        $(".ui.vertical").on("click","a",function () {
+            $(this).toggleClass("active")
+        });
+
+
+
+
+
+        $(".menu.toggle").click(function(){
+
+            $(".m-item").toggleClass("m-mobile-hiden");
+        });
+
+        $('.ui.dropdown').dropdown({
+            on:'hover',
+            position: 'bottom center'
+        });
+
+        $(".tag.m-title").popup();
+        $(".message .close").on("click",function () {
+            $(this).closest(".message").transition('fade');
+        });
+
+
+
+    })
+</script>
+</html>

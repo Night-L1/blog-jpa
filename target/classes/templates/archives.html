@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+	<head th:replace="_fragments :: head(~{::title})">
+		<meta charset="utf-8" />
+		<title>归档</title>
+		<link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="../static/css/me.css"/>
+		<link rel="shortcut icon" href="img/blog.svg">
+		<script src="../static/js/jquery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../static/js/semantic.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<!-- 导航 -->
+		<nav th:replace="_fragments :: menu(3)" class="ui inverted segment attach  m-padded-tb-mini">
+		</nav>
+
+		<!-- 中间部分 -->
+		<div class="m-big m-top">
+			<div class="ui container">
+				<!-- header -->
+				<div class="ui top attached padded segment">
+					<div class="ui two column grid">
+						<div class="column">
+							<h3 class="ui teal header">
+								归档
+							</h3>
+						</div>
+						<div class="right aligned column">
+							共 <h3 class="ui orange header m-inline-block" th:text="${count}"> 14 </h3> 篇博客
+						</div>
+					</div>
+				</div>
+				<!---->
+
+				<th:block th:each="item:${map}" >
+					<h2 class="ui center aligned header" th:text="${item.key}">2017</h2>
+					<div class="ui fluid vertical menu">
+						<a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item" th:each="blog:${item.value}">
+						  <span>
+							  <i class="mini marker basic teal icon"></i>&nbsp; <span th:text="${blog.title}"></span>
+							  &nbsp;<div class="ui left pointing label teal basic" th:text="${#dates.format(blog.updateTime,'MM-dd')}">9月03</div>
+						  </span>
+						  <div class="ui orange basic label" th:text="${blog.flag}">原创</div>
+						</a>
+
+					</div>
+				</th:block>
+
+			</div>
+		</div>
+
+
+		<br>
+		<br>
+		<br>
+
+
+
+
+
+		<!-- 底部 -->
+		<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-max center aligned">
+
+		</footer>
+		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+
+	</body>
+	<script>
+		$(function() {
+			$(".menu.toggle").click(function() {
+
+				$(".m-item").toggleClass("m-mobile-hiden");
+			});
+
+
+
+		})
+	</script>
+</html>

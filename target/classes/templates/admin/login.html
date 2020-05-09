@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head th:replace="_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <title>后台管理</title>
+</head>
+<body>
+<!-- 导航 -->
+<nav class="ui inverted attach segment  m-padded-tb-mini">
+    <div class="ui container">
+        <div class="ui secondary inverted stackable menu">
+            <h2 class="ui teal header item">CFL [ Blog ]</h2>
+        </div>
+    </div>
+</nav>
+<br>
+<div class="ui container" style="width: 20em!important;">
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <br>
+            <h2 class="ui teal image header">
+                <div class="content">
+                    博客管理后台
+                </div>
+            </h2>
+            <p class="ui mini negative message" th:unless="${#strings.isEmpty(loginMess)}" th:text="${loginMess}"></p>
+            <br>
+            <form class="ui large form" method="post" th:action="@{/admin/login}">
+                <div class="ui  segment">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="username" placeholder="用户名"  required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="password" placeholder="密码"  required>
+                        </div>
+                    </div>
+                    <button type="submit" class="ui fluid large teal submit button">登录</button>
+                </div>
+                <br><br>
+            </form>
+
+            <br><br>
+        </div>
+    </div>
+</div>
+<br><br>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+	<head th:replace="_fragments :: head(~{::title})">
+		<meta charset="utf-8" />
+		<title>分类</title>
+	</head>
+	<body>
+		<!-- 导航 -->
+		<nav th:replace="_fragments :: menu(2)" class="ui inverted attach segment  m-padded-tb-mini">
+		</nav>
+		
+		
+		
+		<!-- 中间部分 -->
+		<div class="m-big m-top">
+			<div class="ui container">
+				<!-- header -->
+				<div class="ui top attached segment">
+					<div class="ui two column grid">
+						<div class="column">
+							<h3 class="ui teal header">
+								分类
+							</h3>
+						</div>
+						<div class="right aligned column">
+							共 <h3 class="ui orange header m-inline-block" th:text="${#arrays.length(types)}"> 14 </h3> 个
+						</div>
+					</div>
+				</div>
+				
+				<!-- 默认选中是由 teal颜色的 -->
+				<div class="ui segment attached">
+					<div class="ui labeled button mini m-location " th:each="type:${types}">
+						<a href="#" th:href="@{/types/{id}/(id=${type.id})}"
+						   	class="ui basic  button"
+						   	th:text="${type.name}"
+							th:classappend="${type.id == activeId}? 'teal'">springboot</a>
+						<div class="ui basic left pointing label" th:classappend="${type.id == activeId}? 'teal'" th:text="${#arrays.length(type.blogs)}">10</div>
+					</div>
+				</div>
+
+
+
+				<!-- 内容 -->
+				<div class="ui attached segment" >
+					<div class="ui padded vertical segment m-padded-tb-big m-padded-lr" th:each="blog:${page.content}">
+						<div class="ui mobile reversed stackable grid">
+							<div class="ui eleven wide column m-paddind-mini">
+								<!--th:href="@{/blog/{id}(id=${reblog.id})}"-->
+								<h3 class="ui header"><a href="" target="_blank" th:href="@{/blog/{id}(id=${blog.id})}" class="m-black" th:text="${blog.title}" >你理解真正的财富自由么？</a></h3>
+								<p class="m-text-thin m-text-spaced" th:text="|${blog.description}......|">完毕附表五欸FFBEWKGB W F ANSL BCNWKFB CNWFNO NEWJFNO </p>
+								<div class="ui grid">
+									<div class="ui eleven wide column">
+										<div class="ui horizontal mini link list">
+											<div class="item">
+												<img src="https://unsplash.it/100/100?image=1005" th:src="${blog.user.avatar}" alt="" class="ui avatar image">
+												<div class="content">
+													<a class="header" th:text="${blog.user.nickname}">
+														cfl
+													</a>
+												</div>
+											</div>
+											<div class="item">
+												<i class="calendar icon"></i> <span th:text="${#dates.format(blog.updateTime,'yyy-MM-dd')}"></span>
+											</div>
+											<div class="item">
+												<i class="eye icon"></i> <span th:text="${blog.views}"></span>
+											</div>
+										</div>
+									</div>
+									<div class="ui aligned right five wide column">
+										<a href="" target="_blank" class="ui label mini floated right  teal basic" th:text="${blog.type.name}">
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="ui five wide column">
+								<a href="" target="_blank" >
+									<img src="https://unsplash.it/800/450?image=1005" th:src="${blog.fitsrPicture}" width="120" height="80" alt="" class="ui rounded image">
+								</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!-- bottom -->
+				<div class="ui attached segment" th:if="${page.totalPages}>1">
+					<div class="ui two column grid">
+						<div class="ui two column grid" th:if="${page.totalPages}>1">
+							<div class="column">
+								<a href="" th:href="@{/types/{id}/(id=${activeId},page=${page.number} - 1)}" class="ui button teal basic mini item"
+								   th:unless="${page.first}" >上一页</a>
+							</div>
+							<div class="column">
+								<a href="" class="ui button teal basic mini item"
+								   th:href="@{/types/{id}/(id=${activeId},page=${page.number} + 1)}"
+								   th:unless="${page.last}" >下一页</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
+			</div>
+		</div>
+		<br>
+		<br>
+		<br>
+		<!-- 底部 -->
+		<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-max center aligned">
+
+		</footer>
+		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+	</body>
+	<script>
+		$(function(){
+			$(".menu.toggle").click(function(){
+				
+				$(".m-item").toggleClass("m-mobile-hiden");
+			});
+			
+			
+			
+		})
+	</script>
+</html>

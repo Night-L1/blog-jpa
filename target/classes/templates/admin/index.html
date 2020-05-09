@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head th:replace="admin/_adminfragments :: adminHead(~{::title})">
+    <meta charset="UTF-8">
+    <title>管理主页</title>
+</head>
+<body>
+<nav th:replace="admin/_adminfragments :: adminMenu(0)" class="ui inverted attached top segment  m-padded-tb-mini"></nav>
+
+<br><br><br>
+
+<!-- 中间部分 -->
+<div class="m-big m-top">
+    <div class="ui container center aligned">
+        <div class="ui positive large message" th:object="${session.userInfo}">
+            <h2>Hi,</h2>
+            <p th:text="*{username}">曹付磊, 欢迎登录！</p>
+            <div class="ui inverted section divider"></div>
+            <div class="ui container">
+                <div class="ui mini  statistics" style="margin: auto 0!important;" th:object="${count}">
+                    <div class="statistic">
+                        <div class="value" th:text="*{blogCount}">
+                            22
+                        </div>
+                        <div class="label">博客数量</div>
+                    </div>
+                    <div class="statistic">
+                        <div class="value" th:text="*{blogCount}">
+                            31,200
+                        </div>
+                        <div class="label">评论数</div>
+                    </div>
+                    <div class="statistic">
+                        <div class="value" th:text="*{typesCount}">
+                            22
+                        </div>
+                        <div class="label">分类数</div>
+                    </div>
+                    <div class="statistic">
+                        <div class="value" th:text="*{tagsCount}">
+                            22
+                        </div>
+                        <div class="label">标签数</div>
+                    </div>
+                    <br><br>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+    </div>
+</div>
+
+<br><br>
+
+
+<th:block th:replace="admin/_adminfragments :: adminScript"></th:block>
+
+</body>
+<script>
+    $(function(){
+        $(".menu.toggle").click(function(){
+
+            $(".m-item").toggleClass("m-mobile-hiden");
+        });
+
+        $('.ui.dropdown').dropdown({
+            on:'hover',
+            position: 'bottom center'
+        });
+
+        $("#pay").popup({
+            popup: $(".m-pay"),
+            on:'click',
+            position:'bottom center'
+        })
+
+    })
+</script>
+</html>

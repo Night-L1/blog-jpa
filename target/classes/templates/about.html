@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+	<head th:replace="_fragments :: head(~{::title})">
+		<meta charset="utf-8" />
+		<title>关于我</title>
+	</head>
+	<body>
+		<!-- 导航 -->
+		<nav th:replace="_fragments :: menu(5)" class="ui inverted attach segment  m-padded-tb-mini">
+		</nav>
+		<!-- 中间部分 -->
+		<div class="m-big m-top">
+			<div class="ui container">
+				<div class="ui grid" th:object="${about}">
+					<div class="ui eleven wide column">
+						<img  th:src="*{txPic}" alt="" class="ui rounded image" style="width: 550px;height: 400px;">
+					</div>
+					<div class="ui five wide column">
+						<div class="ui top attached segment">
+							<div class="ui header">关于我</div>
+						</div>
+						<!-- 自我描述 -->
+						<div class="ui attached segment">
+							<p class="m-text-thin m-text-spaced" style="text-indent:2em" th:text="*{introduce}">
+								cbfiewfiueFBkehbckbiufe才弄完比佛成本否不得劲儿未开发勃勃fvbilbil.</p>
+						</div>
+						<!-- 兴趣爱好 -->
+						<div class="ui attached segment">
+							<div class="ui label teal basic">爱好便签</div>
+							<div class="ui orange label basic left pointing m-margin-width-midd"
+								th:each="hobby:*{hobby}" th:text="${hobby}">编程</div>
+						</div>
+						<!-- 技术便签 -->
+						<div class="ui attached segment">
+							<div class="ui label teal basic">技术便签</div>
+							<div class="ui orange label basic right pointing m-margin-width-midd"
+							    th:each="th:*{technology}" th:text="${th}">springboot</div>
+
+						</div>
+						<!-- 连接 -->
+						<div class="ui bottom attached segment center aligned">
+							<a href="#" class="ui circular icon button"><i class="github icon"></i></a>
+							<a href="javascript:void(0);" class="ui email circular icon button" data-content="cfl1220@foxmail.com"><i class="envelope outline icon"></i></a>
+							<a href="javascript:void(0);" class="ui qq circular icon button" data-content="1755273877"><i class="qq icon"></i></a>
+							<a href="javascript:void(0);" class="ui wx circular icon button"><i class="weixin icon"></i></a>
+						</div>
+						
+						
+						<!-- 二维码 -->
+						<div class="ui m-pay flowing popup transition hidden">
+							
+							<div class="ui basic label">
+								<div class="ui  images" style="font: inherit!important;width: 125px;!important;">
+									<div class="image">
+										<img src="http://139.159.138.30:8080/blog/wechat.jpg"  alt="" class="ui rounded bordered image" style="width: 120px;">
+										<div>微信</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<br>
+		<br>
+		
+		
+		
+		
+		
+		<!-- 底部 -->
+		<footer th:replace="_fragments :: footer" class="ui inverted vertical segment m-padded-tb-max center aligned">
+
+		</footer>
+		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+		<script th:src="@{/js/semantic.min.js}" src="../static/js/semantic.min.js" type="text/javascript" charset="utf-8"></script>
+
+
+		
+	</body>
+	<script>
+		$(function(){
+			$(".menu.toggle").click(function(){
+				
+				$(".m-item").toggleClass("m-mobile-hiden");
+			});
+			
+			$(".qq.circular").popup();
+			$(".email").popup();
+			$(".wx.circular").popup({
+				popup: $(".m-pay"),
+				on:'hover',
+				position:'bottom center'
+			})
+		})
+	</script>
+</html>

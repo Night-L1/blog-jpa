@@ -1,0 +1,144 @@
+
+body{
+	background: url(../img/bg.png);
+}
+
+.m-top{
+	padding-top: 2em!important;
+}
+.m-left{
+	margin-left: 1.5em!important;
+}
+.m-location{
+	margin-top: 0.5em !important;
+	margin-bottom: 0.2em !important;
+	margin-left: 0.2em!important;
+	margin-right: 1.5em !important;
+	padding-top: 1.5em !important;
+}
+.m-padded-lr-top{
+	padding-left: 4em !important;
+	padding-right: 4em !important;
+	padding-top: 1em !important;
+}
+
+.m-padded-lr{
+	padding-left: 2em !important;
+	padding-right: 2em !important;
+}
+.m-padded-tb-mini{
+	padding-top: 0.2em !important;
+	padding-bottom: 0.2em !important;
+}
+.m-padded-tb-smail{
+	padding-top:2em !important;
+	padding-bottom:2em !important;
+}
+.m-padded-tb-midd{
+	padding-top: 1em !important;
+	padding-bottom: 1em !important;
+}
+
+.m-padded-tb-big{
+	padding-top: 2em !important;
+	padding-bottom: 2em !important;
+}
+.m-padded-tb-max{
+	padding-top: 5em !important;
+	padding-bottom: 5em !important;
+}
+.m-padded-tb-lager{
+	padding-top: 6em !important;
+	padding-bottom: 6em !important;
+}
+.m-paddind-mini{
+	padding: 1.8em !important;
+}
+.m-max{
+	max-width: 72em !important;
+	margin: auto !important;
+}
+.m-big{
+	max-width: 55em !important;
+	margin: auto !important;
+}
+.m-mid{
+	max-width: 60em !important;
+	margin: auto !important;
+}
+
+.m-margin-width-midd{
+	margin-top: 0.5em !important;
+	margin-bottom: 0.5em !important;
+}
+
+.m-margin-width{
+	margin-top: 0.5em !important;
+	margin-bottom: 0.2em !important;
+	
+}
+.m-margin{
+	margin-left: 0.6em !important;
+}
+/* -----------------设置字体----------------- */
+.m-text-thin{
+	font-weight: 300!important;
+}
+.m-text-spaced{
+	letter-spacing: 1px !important;
+}
+.m-text-lined{
+	line-height: 1.8 !important;
+}
+.m-opactity-mini{
+	opacity: 0.8 !important;
+}
+
+
+
+
+.m-inline-block{
+	display: inline-block !important;
+}
+
+/* 隐藏 */
+.m-hidden{
+	display: none!important;
+}
+	
+
+/* ----------------位置-------------------- */
+.m-position{
+	
+	position: fixed !important;
+	bottom: 20px !important;
+	right: 0.5em !important;
+	
+	z-index: 1!important;
+	
+}
+
+/* -------------------color---------------- */
+.m-black{
+	color: #333;
+	
+}
+/* position */
+.m-top-right{
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.m-mobile-show{
+		display: none!important;
+	}
+
+@media screen and (max-width:768px) {
+	.m-mobile-hiden{
+		display: none!important;
+	}
+	.m-mobile-show{
+		display: block!important;
+	}
+}
+

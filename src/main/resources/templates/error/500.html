@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head th:replace="_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <title>500</title>
+</head>
+<body>
+
+<!-- 导航 -->
+<nav th:replace="_fragments :: menu(0)"></nav>
+
+<br>
+
+<div class="m-contain-small m-padded-tb-smail">
+    <div class="ui error message" style="width: 60em;margin: auto">
+        <div class="ui container">
+            <br><br>
+            <h2>访问出错了！</h2>
+            <p>对不起，服务器繁忙，请稍后再试！</p>
+            <a href="javascript:void(window.history.go(-1));" class="ui labeled">点击返回上一层</a>
+            <br><br>
+        </div>
+    </div>
+</div>
+
+
+<br><br>
+
+<!-- 底部 -->
+<footer th:replace="_fragments :: footer"></footer>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head th:replace="admin/_adminfragments :: adminHead(~{::title})">
+	<meta charset="utf-8" />
+	<title>标签管理</title>
+</head>
+<body>
+<!-- 导航 -->
+<nav th:replace="admin/_adminfragments :: adminMenu(3)" class="ui inverted attached top segment  m-padded-tb-mini">
+
+</nav>
+
+
+
+<!-- 中间部分 -->
+<div class="m-big m-top">
+	<div class="ui container">
+		<form action="#" th:action="@{/admin/tags/input}"  class="ui segment form">
+			<div class="inline field">
+				<div class="ui left labeled input">
+					<label class="ui teal basic label">标签</label>
+					<label>
+						<input type="text" name="name" placeholder="标签名称" required/>
+					</label>
+				</div>
+				<button type="submit" class="ui submit teal button"><i class="plus icon"></i>新增</button>
+			</div>
+		</form>
+
+		<!--操作消息提示-->
+		<div class="ui green message" th:unless="${#strings.isEmpty(tag_succ_msg)}">
+			<i class="close icon"></i>
+			<div class="header">提示：</div>
+			<p th:text="${tag_succ_msg}"></p>
+		</div>
+		<div class="ui error message" th:unless="${#strings.isEmpty(tag_err_msg)}">
+			<i class="close icon"></i>
+			<div class="header">提示：</div>
+			<p th:text="${tag_err_msg}"></p>
+		</div>
+
+		<!-- 技术便签 -->
+		<div class="ui attached segment inline">
+			<p class="ui label teal right pointing basic">技术便签</p>
+			<div class="ui divider header"></div>
+			<div class="m-margin-width-midd inline" style="display: inline-block;margin-left: 2em;"
+				 th:each="tag:${tags}" th:unless="${#arrays.isEmpty(tags)}">
+				 <a th:href="@{/admin/tags/{id}/delete(id=${tag.id})}" class="ui teal tag m-title label" data-content="点我删除" th:text="${tag.name}">精选</a>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+<br>
+<br>
+
+
+
+
+
+
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<th:block th:replace="admin/_adminfragments :: adminScript"></th:block>
+
+
+</body>
+<script>
+	$(function(){
+		$(".menu.toggle").click(function(){
+
+			$(".m-item").toggleClass("m-mobile-hiden");
+		});
+
+		$('.ui.dropdown').dropdown({
+			on:'hover',
+			position: 'bottom center'
+		});
+
+		$(".tag.m-title").popup();
+		$(".message .close").on("click",function () {
+			$(this).closest(".message").transition('fade');
+		});
+
+
+
+	})
+</script>
+</html>

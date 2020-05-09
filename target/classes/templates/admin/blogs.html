@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+	<head th:replace="admin/_adminfragments :: adminHead(~{::title})">
+		<meta charset="utf-8" />
+		<title>博客管理</title>
+	</head>
+	<body>
+		<!-- 导航 -->
+		<nav th:replace="admin/_adminfragments :: adminMenu(1)" class="ui inverted attached top segment  m-padded-tb-mini">
+
+		</nav>
+		<div class="ui attached  pointing menu">
+			<div class="ui container">
+				<div class="right menu">
+					<a href="#" th:href="@{/admin/blog/publish}" class="item">发布</a>
+					<a href="javascript:void(0);" class="teal active item">列表</a>
+				</div>
+			</div>
+		</div>
+		
+		
+		<!-- 中间部分 -->
+		<div class="m-big m-top">
+			<div class="ui container">
+				<div  class="ui secondary form">
+					<!--隐藏域-->
+					<input type="hidden" name="page">
+
+					<div class="inline fields">
+						<div class="field">
+							<input type="text" name="title" placeholder="请输入标题"/>
+						</div>
+						<div class="field">
+							<div class="ui selection dropdown">
+								<input type="hidden" name="typeId">
+								<i class="dropdown icon"></i>
+								<div class="default text">分类</div>
+								<div class="menu">
+									<div th:each="type:${types}" class="item" data-value="1" th:data-value="${type.id}" th:text="${type.name}">错误</div>
+								</div>
+							</div>
+						</div>
+						<div class="field">
+							<div class="ui checkbox">
+								<input type="checkbox" name="recommend" id="recommend" >
+								<label for="recommend">推荐</label>
+							</div>
+						</div>
+						<div class="field">
+							<button type="button" id="search-btn" class="ui  teal basic button">
+								<i class="search icon"></i>
+								搜索
+							</button>
+						</div>
+					</div>
+				</div>
+				<div id="table-container">
+					<table th:fragment="blogList" class="ui compact teal table">
+						<thead>
+						<tr>
+							<th>序号</th>
+							<th>标题</th>
+							<th>类型</th>
+							<th>推荐</th>
+							<th>发布状态</th>
+							<th>更新时间</th>
+
+							<th>操作</th>
+						</tr>
+						</thead>
+
+						<tbody>
+
+						<tr th:each="blog,itStat:${pages.content}">
+							<td th:text="${itStat.count}">1</td>
+							<td th:text="${blog.title}">spring</td>
+							<td th:text="${blog.type.name}">ceshi</td>
+							<td th:text="${blog.recommend}?'是':'否'">是</td>
+							<td th:text="${blog.published}?'发布':'草稿'"></td>
+							<td th:text="${blog.updateTime}">2020-12-20</td>
+
+							<td>
+								<a href="#"  th:href="@{/admin/blog/{id}/update(id=${blog.id})}" class="ui mini teal basic button">编辑</a>
+								<a href="#"  th:href="@{/admin/blog/{id}/delete(id=${blog.id})}" class="ui mini red basic button">删除</a>
+							</td>
+						</tr>
+
+						</tbody>
+						<tfoot>
+						<tr>
+							<th colspan="7">
+								<div class="ui mini pagination menu" th:if="${pages.totalPages}>1">
+									<a onclick="page(this)"  th:attr="data-page=${pages.number} - 1"
+										 th:unless="${pages.first}" class="item">上一页</a>
+
+									<a onclick="page(this)" th:attr="data-page=${pages.number} + 1"
+										 th:unless="${pages.last}" class="item">下一页</a>
+								</div>
+							</th>
+						</tr>
+						</tfoot>
+					</table>
+
+					<!--操作消息提示-->
+					<div class="ui message" th:unless="${#strings.isEmpty(message)}">
+						<i class="close icon"></i>
+						<div class="header">提示：</div>
+						<p th:text="${message}"></p>
+					</div>
+
+				</div>
+
+				
+				
+				
+			</div>
+		</div>
+		
+		<br>
+		<br>
+		
+		
+		
+		
+		
+
+		<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+		<th:block th:replace="admin/_adminfragments :: adminScript"></th:block>
+
+		<script>
+
+			function page(obj){
+
+				$("input[name='page']").val($(obj).attr("data-page"));
+				loadData();
+			}
+
+
+			$(function(){
+				$(".menu.toggle").click(function(){
+
+					$(".m-item").toggleClass("m-mobile-hiden");
+				});
+
+				$('.ui.dropdown').dropdown({
+					on:'hover',
+					position: 'bottom center'
+				});
+
+				$("#pay").popup({
+					popup: $(".m-pay"),
+					on:'click',
+					position:'bottom center'
+				})
+
+
+				$("#pre").click(function () {
+					$("input[name='page']").val($(this).attr("data-page"));
+					loadData();
+				});
+
+				$("#next").click(function () {
+					$("input[name='page']").val($(this).attr("data-page"));
+					loadData();
+				});
+
+				$("#search-btn").click(function () {
+					loadData();
+				});
+
+				$(".message .close").on("click",function () {
+					$(this).closest(".message").transition('fade');
+				});
+
+
+			})
+
+
+
+			function loadData() {
+				$("#table-container").load('/[[@{admin/blogs/search}]]/',{
+					title:$("input[name='title']").val(),
+					typeId:$("input[name='typeId']").val(),
+					recommend:$("input[type='checkbox']").prop("checked"),
+					page:$("input[name='page']").val()
+				});
+			}
+		</script>
+	</body>
+
+</html>
